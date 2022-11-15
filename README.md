@@ -25,14 +25,9 @@
 ## Install
 
 ```bash
-npm install --save react-zoom-pan-pinch
+npm install --save @paryajafari/react-zoom-pan-pinch
 ```
 
-or
-
-```bash
-yarn add react-zoom-pan-pinch
-```
 
 ## Usage
 
