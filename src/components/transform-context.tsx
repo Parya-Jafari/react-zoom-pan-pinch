@@ -139,8 +139,8 @@ class TransformContext extends Component<
     wrapper.addEventListener("touchstart", this.onTouchPanningStart, passive);
     wrapper.addEventListener("touchmove", this.onTouchPanning, passive);
     wrapper.addEventListener("touchend", this.onTouchPanningStop, passive);
-    wrapper.addEventListener("pointerover", this.onPointerIn, passive);
-    wrapper.addEventListener("pointerout", this.onPointerOut, passive);
+    wrapper.addEventListener("pointerenter", this.onPointerIn, passive);
+    wrapper.addEventListener("pointerleave", this.onPointerOut, passive);
   };
 
   handleInitialize = (): void => {
@@ -186,7 +186,9 @@ class TransformContext extends Component<
 
   private handleCursorPanningStop = (event: PointerEvent | TouchEvent): void => {
     const element = event.target as HTMLElement;
-    element.style.cursor = "grab";
+    if (element.style.cursor === "grabbing") {
+      element.style.cursor = "grab";
+    }
   };
 
   private onPointerOut = (event: PointerEvent): void => {
@@ -258,9 +260,9 @@ class TransformContext extends Component<
 
   onPanningStop = (event: PointerEvent | TouchEvent): void => {
     const { onPanningStop } = this.props;
+    this.handleCursorPanningStop(event);
 
     if (this.isPanning) {
-      this.handleCursorPanningStop(event);
       handlePanningEnd(this);
       handleCallback(getContext(this), event, onPanningStop);
     }
